@@ -2,18 +2,18 @@
 apiVersion: pkg.crossplane.io/v1alpha1
 kind: ControllerConfig
 metadata:
-  name: jet-xo-config
+  name: jet-template-config
   labels:
-    app: crossplane-provider-jet-xo
+    app: crossplane-provider-jet-template
 spec:
-  image: ixxel/provider-jet-xo-controller:v0.1.0
+  image: crossplane/provider-jet-template-controller:v0.1.0
   args: ["-d"]
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: crossplane-provider-jet-xo
+  name: crossplane-provider-jet-template
 spec:
-  package: ixxel/provider-jet-xo:v0.1.0
+  package: crossplane/provider-jet-template:v0.1.0
   controllerConfigRef:
-    name: jet-xo-config
+    name: jet-template-config

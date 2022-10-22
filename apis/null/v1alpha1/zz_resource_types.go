@@ -25,61 +25,62 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ConfigObservation struct {
+type ResourceObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ConfigParameters struct {
+type ResourceParameters struct {
 
-	// +kubebuilder:validation:Required
-	Template *string `json:"template" tf:"template,omitempty"`
+	// A map of arbitrary strings that, when changed, will force the null resource to be replaced, re-running any associated provisioners.
+	// +kubebuilder:validation:Optional
+	Triggers map[string]*string `json:"triggers,omitempty" tf:"triggers,omitempty"`
 }
 
-// ConfigSpec defines the desired state of Config
-type ConfigSpec struct {
+// ResourceSpec defines the desired state of Resource
+type ResourceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConfigParameters `json:"forProvider"`
+	ForProvider     ResourceParameters `json:"forProvider"`
 }
 
-// ConfigStatus defines the observed state of Config.
-type ConfigStatus struct {
+// ResourceStatus defines the observed state of Resource.
+type ResourceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConfigObservation `json:"atProvider,omitempty"`
+	AtProvider        ResourceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// Config is the Schema for the Configs API
+// Resource is the Schema for the Resources API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,xojet}
-type Config struct {
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,templatejet}
+type Resource struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ConfigSpec   `json:"spec"`
-	Status            ConfigStatus `json:"status,omitempty"`
+	Spec              ResourceSpec   `json:"spec"`
+	Status            ResourceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ConfigList contains a list of Configs
-type ConfigList struct {
+// ResourceList contains a list of Resources
+type ResourceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Config `json:"items"`
+	Items           []Resource `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Config_Kind             = "Config"
-	Config_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Config_Kind}.String()
-	Config_KindAPIVersion   = Config_Kind + "." + CRDGroupVersion.String()
-	Config_GroupVersionKind = CRDGroupVersion.WithKind(Config_Kind)
+	Resource_Kind             = "Resource"
+	Resource_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Resource_Kind}.String()
+	Resource_KindAPIVersion   = Resource_Kind + "." + CRDGroupVersion.String()
+	Resource_GroupVersionKind = CRDGroupVersion.WithKind(Resource_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Config{}, &ConfigList{})
+	SchemeBuilder.Register(&Resource{}, &ResourceList{})
 }

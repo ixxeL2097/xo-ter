@@ -1,10 +1,10 @@
 ---
 name: Feature Request
-about: Help us make XO Provider more useful
+about: Help us make Template Provider more useful
 labels: enhancement
 ---
 <!--
-Thank you for helping to improve XO Provider!
+Thank you for helping to improve Template Provider!
 
 Please be sure to search for open issues before raising a new one. We use issues
 for bug reports and feature requests. Please find us at https://slack.crossplane.io
@@ -18,7 +18,7 @@ Leading with this context helps frame the feature request so we can ensure we
 implement it sensibly.
 --->
 
-### How could XO Provider help solve your problem?
+### How could Template Provider help solve your problem?
 <!--
-Let us know how you think XO Provider could help with your use case.
+Let us know how you think Template Provider could help with your use case.
 -->

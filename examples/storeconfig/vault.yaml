@@ -1,4 +1,4 @@
-apiVersion: xo.jet.crossplane.io/v1alpha1
+apiVersion: template.jet.crossplane.io/v1alpha1
 kind: StoreConfig
 metadata:
   name: vault

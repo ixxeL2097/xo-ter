@@ -25,7 +25,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "xo.jet.crossplane.io"
+	Group   = "template.jet.crossplane.io"
 	Version = "v1alpha1"
 )
 

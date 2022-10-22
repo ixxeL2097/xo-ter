@@ -21,22 +21,16 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/controller"
 
-	config "github.com/crossplane-contrib/provider-jet-xo/internal/controller/cloud/config"
-	providerconfig "github.com/crossplane-contrib/provider-jet-xo/internal/controller/providerconfig"
-	set "github.com/crossplane-contrib/provider-jet-xo/internal/controller/resource/set"
-	acl "github.com/crossplane-contrib/provider-jet-xo/internal/controller/xenorchestra/acl"
-	vm "github.com/crossplane-contrib/provider-jet-xo/internal/controller/xenorchestra/vm"
+	resource "github.com/crossplane-contrib/provider-jet-template/internal/controller/null/resource"
+	providerconfig "github.com/crossplane-contrib/provider-jet-template/internal/controller/providerconfig"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		config.Setup,
+		resource.Setup,
 		providerconfig.Setup,
-		set.Setup,
-		acl.Setup,
-		vm.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err
