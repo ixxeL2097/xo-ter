@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: resources.null.template.jet.crossplane.io
+  name: sets.resource.xo.jet.crossplane.io
 spec:
-  group: null.template.jet.crossplane.io
+  group: resource.xo.jet.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - templatejet
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    - xojet
+    kind: Set
+    listKind: SetList
+    plural: sets
+    singular: set
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API
+        description: Set is the Schema for the Sets API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: SetSpec defines the desired state of Set
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,13 +63,28 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
-                    additionalProperties:
+                  limit:
+                    items:
+                      properties:
+                        quantity:
+                          type: number
+                        type:
+                          type: string
+                      required:
+                      - quantity
+                      - type
+                      type: object
+                    type: array
+                  objects:
+                    items:
                       type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
-                    type: object
+                    type: array
+                  subjects:
+                    items:
+                      type: string
+                    type: array
+                required:
+                - limit
                 type: object
               providerConfigRef:
                 default:
@@ -168,7 +183,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: SetStatus defines the observed state of Set.
             properties:
               atProvider:
                 properties:
